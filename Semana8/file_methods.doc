@@ -1,0 +1,18 @@
+    | Método | Descripción |
+    | --- | --- |
+    | `read()` | Lee y retorna todo el contenido del archivo |
+    | `readlines()` | Lee todo el contenido del archivo y retorna una lista con cada línea. |
+    | `write()` | Escribe contenidos en un archivo. |
+    | `close()` | Cerrar el archivo |
+    | `detach()` | Separa el *stream* del *búfer* y lo devuelve |
+    | `fileno()` | Devuelve el *stream* en manera de numero |
+    | `flush()` | Se usa para guardar la data inmediatamente en el archivo sin tener que esperar al método `close()` |
+    | `isatty()` | Devuelve si el archivo es interactivo o no |
+    | `readable()` | Devuelve si el archivo se puede leer o no |
+    | `readline()` | Devuelve una línea del archivo |
+    | `seek()` | Cambia la posición del cursor en el archivo para indicar donde se quiere almacenar el dato |
+    | `seekable()` | Devuelve si el archivo permite cambiar la posicion dentro de él o no |
+    | `tell()` | Devuelve la posición del cursor dentro del archivo |
+    | `truncate()` | Modifica el tamaño del archivo |
+    | `writable()` | Devuelve si un archivo permite escritura o no |
+    | `writelines()` | Escribe strings en el archivo |
