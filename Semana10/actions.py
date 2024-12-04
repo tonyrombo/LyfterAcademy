@@ -1,7 +1,7 @@
 students = [
-    {'name': 'Will', 'section': '33B', 'Español': 45, 'Inglés': 78, 'Sociales': 90, 'Ciencias': 67, 'promedio': 90.0},
-    {'name': 'Sonia', 'section': '12D', 'Español': 56, 'Inglés': 90, 'Sociales': 90, 'Ciencias': 89, 'promedio': 30.0},
-    {'name': 'Esteban', 'section': '12D', 'Español': 56, 'Inglés': 90, 'Sociales': 90, 'Ciencias': 89, 'promedio': 100.0}
+    {'Nombre': 'Will', 'Sección': '33B', 'Español': 45, 'Inglés': 78, 'Sociales': 90, 'Ciencias': 67, 'Promedio': 90.0},
+    {'Nombre': 'Sonia', 'Sección': '12D', 'Español': 56, 'Inglés': 90, 'Sociales': 90, 'Ciencias': 89, 'Promedio': 30.0},
+    {'Nombre': 'Esteban', 'Sección': '12D', 'Español': 56, 'Inglés': 90, 'Sociales': 90, 'Ciencias': 89, 'Promedio': 100.0}
 ]
 
 def ingresarEstudiante():
@@ -9,26 +9,26 @@ def ingresarEstudiante():
     subjectsList = ["Español","Inglés", "Sociales", "Ciencias"]
     student = {}
     
-    student['name'] = studentName
+    student['Nombre'] = studentName
     
     try:
         studentSection = input("Ingrese la sección: ")
         if(len(studentSection) > 3):
             raise ValueError
-        student['section'] = studentSection
+        student['Sección'] = studentSection
         
     except:
         print("La seccion no puede tener más de 3 caracteres.")
 
-    totalNotas = 0
+    totalGrades = 0
     for subject in subjectsList:
         grade = int(input(f"Ingrese la nota de {subject}: "))
         while grade > 100:
             grade = int(input(f"La nota deben ser numeros entre 0 - 100.\nIngrese de nuevo la nota de {subject}: "))
         student[subject] = grade
-        totalNotas = totalNotas + grade
+        totalGrades = totalGrades + grade
 
-    student['promedio'] = totalNotas / len(subjectsList)
+    student['Promedio'] = totalGrades / len(subjectsList)
     students.append(student)
     print(students)
 
@@ -43,15 +43,15 @@ def informacionEstudiantes():
 
 
 def topTresEstudiantes():
-    estudiantesPorOrden = sorted(students, key=lambda x: x['promedio'], reverse=True)#funcionalidad para ordenar lista de diccionarios por un key especifico.
-    primerEstudiante = f"{estudiantesPorOrden[0]['name']} con nota: {estudiantesPorOrden[0]['promedio']}"
-    segundoEstudiante = f"{estudiantesPorOrden[1]['name']} con nota: {estudiantesPorOrden[1]['promedio']}"
-    tercerEstudiante = f"{estudiantesPorOrden[2]['name']} con nota: {estudiantesPorOrden[2]['promedio']}"
-    print(f"Este es el top 3 de estudiantes\n{primerEstudiante}\n{segundoEstudiante}\n{tercerEstudiante}")
+    sortedStudents = sorted(students, key=lambda x: x['Promedio'], reverse=True)#funcionalidad para ordenar lista de diccionarios por un key especifico.
+    firstStudent = f"{sortedStudents[0]['Nombre']} con nota: {sortedStudents[0]['Promedio']}"
+    secondStudent = f"{sortedStudents[1]['Nombre']} con nota: {sortedStudents[1]['Promedio']}"
+    thirdStudent = f"{sortedStudents[2]['Nombre']} con nota: {sortedStudents[2]['Promedio']}"
+    print(f"Este es el top 3 de estudiantes\n{firstStudent}\n{secondStudent}\n{thirdStudent}")
 
 def promedioTotal():
-    promedioTotal = 0
+    averageTotal = 0
     for student in students:
-        promedioTotal += student['promedio']
-    promedioTotal = round(promedioTotal/len(students),2)
-    print(f'El promedio total entre los estudiantes es: {promedioTotal}')
+        averageTotal += student['Promedio']
+    averageTotal = round(averageTotal/len(students),2)
+    print(f'El promedio total entre los estudiantes es: {averageTotal}')

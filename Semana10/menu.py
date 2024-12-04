@@ -29,7 +29,7 @@ def menu():
         wantContinue = input("Respuesta inválida, ¿desea realizar otra accion? Y/N: ")
 
     if wantContinue == "y":
-        menuSelection()
-    else: return None
-
-menu()
+        menu()
+    else: 
+        print("¡Hasta pronto!")
+        return None

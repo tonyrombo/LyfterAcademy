@@ -16,6 +16,8 @@ def exportData():
             counter += 1
 
         csv_writer.writerow(student.values())
+    
+    print('¡La información de los estudiantes fue exportada con éxito!')
 
 
 def importData():
@@ -30,13 +32,15 @@ def importData():
         next(myfile) #Funcionalidad para saltar la primer iteraccion en el For Loop y asi evitar los headings del CSV.
         for line in myfile:
             studentData = line.split(',')
+            average = (int(studentData[2]) + int(studentData[3]) + int(studentData[4]) + int(studentData[5])) / 4
             data = {
-                'name': studentData[0],
-                'section': studentData[1],
+                'Nombre': studentData[0],
+                'Sección': studentData[1],
                 'Espanol': studentData[2],
                 'Ingles': studentData[3],
                 'Sociales': studentData[4],
-                'Ciencias': studentData[5]
+                'Ciencias': studentData[5],
+                'Promedio': average
             }
             students.append(data)
-        print("La informacion de los datos fue importada con éxito")
+        print("¡La información de los datos fue importada con éxito!")
