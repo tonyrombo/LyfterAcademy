@@ -1,37 +1,50 @@
 import math
 
 class Circle:
-    
-    radius = 45
+    def __init__(self, radius):
+        self.radius = radius
 
-    def getArea(self, radius):
+    def getArea(self):
         pi = math.pi
-        area = pi * (radius * radius)
+        area = pi * (self.radius ** 2)
         return area
     
 
-#new_circle = Circle()
-#print(new_circle.getArea(Circle.radius))
+# new_circle = Circle(25)
+# print(new_circle.getArea())
 
 
 class Bus:
-    max_passengers = 50
-    current_Passengers=24
+    def __init__(self, max_passengers=50, current_passengers=0):
+        self.max_passengers = max_passengers
+        self.current_passengers = current_passengers
 
-    def addPassengers(self, Person):
-        if self.current_Passengers < self.max_passengers:
-            self.current_Passengers += int(int(Person))
-            print(f"Hay {self.current_Passengers} pasajeros")
-        else: print("El bus se encuentra en su capacidad máxima")
-    
-    def removePassenger(self):
-        if self.current_Passengers > 0:
-            self.current_Passengers -= 1
-            print(f"Hay {self.current_Passengers} pasajeros")
-        else: print("El bus no tiene pasajeros para bajar.")
+    def addPassengers(self, persons):
+        try:
+            persons = int(persons)
 
-# new_bus = Bus()
-# new_bus.removePassenger()
+            if persons <= 0:
+                print("Se debe ingresar un numero mayor a 0 para los pasajeros")
+                return
+            
+            if self.current_passengers + persons > self.max_passengers:
+                print(f"No hay espacio para {persons} pasajeros.")
+            else:
+                self.current_passengers += persons
+                print(f"Hay {self.current_passengers} pasajeros en el autobus.")
+
+        except ValueError:
+            print("Por favor, ingrese un número válido de personas.")
+
+    def remove_passenger(self):
+        if self.current_passengers > 0:
+            self.current_passengers -= 1
+            print(f"Hay {self.current_passengers} pasajeros ahora.")
+        else:
+            print("El bus no tiene pasajeros para bajar.")
+
+new_bus = Bus()
+new_bus.addPassengers(10)
 
 class Head:
     def __init__(self, eyes, nose_size, mouth_gesture):
@@ -91,6 +104,6 @@ torso = Torso(head, right_arm, left_arm, [right_leg, left_leg])
 
 human = Human(head, torso, right_arm, left_arm, right_leg, left_leg)
 
-print(f"Human's head has {human.head.eyes} eyes, a {human.head.nose_size} nose, and a {human.head.mouth_gesture} mouth.")
-print(f"Right hand has {human.right_arm.hand.fingers} fingers.")
-print(f"Left foot has {human.left_leg.foot.toes} toes.")
+# print(f"Human's head has {human.head.eyes} eyes, a {human.head.nose_size} nose, and a {human.head.mouth_gesture} mouth.")
+# print(f"Right hand has {human.right_arm.hand.fingers} fingers.")
+# print(f"Left foot has {human.left_leg.foot.toes} toes.")
