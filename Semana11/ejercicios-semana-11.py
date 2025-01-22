@@ -14,37 +14,54 @@ class Circle:
 # print(new_circle.getArea())
 
 
+class Person:
+    def __init__(self, name):
+        self.name = name
+
 class Bus:
     def __init__(self, max_passengers=50, current_passengers=0):
         self.max_passengers = max_passengers
         self.current_passengers = current_passengers
+        self.passengers = []
 
-    def addPassengers(self, persons):
+    def add_passengers(self, *persons): #Se utiliza * antes del parametro para indicar que se pueden agregar varios del mismo
         try:
-            persons = int(persons)
 
-            if persons <= 0:
-                print("Se debe ingresar un numero mayor a 0 para los pasajeros")
-                return
-            
-            if self.current_passengers + persons > self.max_passengers:
-                print(f"No hay espacio para {persons} pasajeros.")
-            else:
-                self.current_passengers += persons
-                print(f"Hay {self.current_passengers} pasajeros en el autobus.")
+            for person in persons:
+                if not isinstance(person, Person): #Se utiliza este metodo para validar que el elemento es una instancia de Person
+                    raise TypeError(f"{person} debe ser una instancia de la clase Person")
 
-        except ValueError:
-            print("Por favor, ingrese un número válido de personas.")
+                if self.current_passengers + 1 > self.max_passengers:
+                    print(f"No hay espacio para {person.name}. El autobús está lleno.")
+                else:
+                    self.passengers.append(person)
+                    self.current_passengers += 1
+                    print(f"{person.name} ha subido al autobús. Pasajeros actuales: {self.current_passengers}/{self.max_passengers}.")
 
-    def remove_passenger(self):
-        if self.current_passengers > 0:
-            self.current_passengers -= 1
-            print(f"Hay {self.current_passengers} pasajeros ahora.")
-        else:
-            print("El bus no tiene pasajeros para bajar.")
+        except TypeError as error:
+            print(f"Error: {error}")
+
+    def remove_passenger(self, person_name):
+        try:
+            for person in self.passengers:
+                if person.name == person_name:
+                    self.passengers.remove(person)
+                    self.current_passengers -= 1
+                    print(f"{person_name} ha bajado del autobús.")
+                    return
+                else:
+                    print(f"{person_name} no está en el autobús.")
+        except TypeError as error:
+            print(f"Error: {error}")
 
 new_bus = Bus()
-new_bus.addPassengers(10)
+person1 = Person("Tony")
+person2 = Person("Carlos")
+person3 = Person("Emily")
+
+new_bus.add_passengers(person1)
+new_bus.add_passengers(person2, person3)
+
 
 class Head:
     def __init__(self, eyes, nose_size, mouth_gesture):
