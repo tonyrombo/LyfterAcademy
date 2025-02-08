@@ -42,11 +42,11 @@ class SavingsAccount(BankAccount):
             super().withdraw_money(amount)
             print(f"Retiro exitoso. Saldo actual: ${self.balance:.2f}")
 
-# print("\nSavings Account")
-# savings = SavingsAccount(1000, 300)  
-# savings.withdraw_money(500)
-# savings.withdraw_money(250)  
-# savings.deposit_money(100)
+print("\nSavings Account")
+savings = SavingsAccount(1000, 300)  
+savings.withdraw_money(500)
+savings.withdraw_money(250)  
+savings.deposit_money(100)
 
 
 #EJERCICIO 2
@@ -109,9 +109,9 @@ print(f"El perímetro del rectángulo es: {rectangle.calculate_perimeter():.2f}"
 print(f"El área del rectángulo es: {rectangle.calculate_area():.2f}")
 
 #EJERCICIO 3
-#print("\nUtilidad de la Herencia Múltiple en Clases.")
+print("\nUtilidad de la Herencia Múltiple en Clases.")
 answer = 'Según lo visto en las clases podemos decir que la herencia multiple se utiliza para heredar de mas de una clase padre y asi podemos utilizar métodos de varias clases en una clase hija.\nSirve para:\n\t1. Utilizar metodos en diferentes clases.\n\t2. Tener ceodigo reutilizable.\n\n'
-#print(answer)
+print(answer)
 #EJEMPLO
 class Plant:
     def __init__(self, name):
@@ -134,6 +134,6 @@ class RoseAppleTree(Plant, FloweringPlant, FruitingPlant):
 
 tree = RoseAppleTree("Árbol de Manzana Rosa")
 
-# print(tree.photosynthesis())
-# print(tree.bloom())
-# print(tree.produce_fruit())
+print(tree.photosynthesis())
+print(tree.bloom())
+print(tree.produce_fruit())
