@@ -39,14 +39,14 @@ class SavingsAccount(BankAccount):
         if self.balance - amount < self.min_balance:
             print(f"No se pueden retirar ${amount:.2f}. El saldo debe permanecer sobre ${self.min_balance}.")
         else:
-            self.balance -= amount
+            super().withdraw_money(amount)
             print(f"Retiro exitoso. Saldo actual: ${self.balance:.2f}")
 
-print("\nSavings Account")
-savings = SavingsAccount(1000, 300)  
-savings.withdraw_money(500)
-savings.withdraw_money(250)  
-savings.deposit_money(100)
+# print("\nSavings Account")
+# savings = SavingsAccount(1000, 300)  
+# savings.withdraw_money(500)
+# savings.withdraw_money(250)  
+# savings.deposit_money(100)
 
 
 #EJERCICIO 2
@@ -65,11 +65,11 @@ class Circle(Shape):
 
     def calculate_perimeter(self):
         perimeter = 2 * math.pi * self.radius
-        print(f"El perimetro del círculo es: {perimeter:.2f}")
+        return perimeter
 
     def calculate_area(self):
         area = math.pi * self.radius ** 2 
-        print(f"El área del círculo es: {area:.2f}")
+        return area
     
 class Square(Shape):
     def __init__(self, side):
@@ -77,11 +77,11 @@ class Square(Shape):
 
     def calculate_perimeter(self):
         perimeter = 4 * self.side
-        print(f"El perimetro del cuadrado es: {perimeter:.2f}")
+        return perimeter
 
     def calculate_area(self):
         area = self.side ** 2
-        print(f"El área del cuadrado es: {area:.2f}")
+        return area
     
 class Rectangle(Shape):
     def __init__(self, width, height):
@@ -90,28 +90,28 @@ class Rectangle(Shape):
 
     def calculate_perimeter(self):
         perimeter = 2 * (self.width + self.height)
-        print(f"El perímetro del rectángulo es: {perimeter:.2f}")
+        return perimeter
 
     def calculate_area(self):
         area = self.width * self.height
-        print(f"El área del rectángulo es: {area:.2f}")
+        return area
     
 
 print("\nPerimetro y Area de figuras")
 circle = Circle(5)
 square = Square(4)
 rectangle = Rectangle(3, 7)
-circle.calculate_perimeter()
-circle.calculate_area()
-square.calculate_perimeter()
-square.calculate_area()
-rectangle.calculate_perimeter()
-rectangle.calculate_area()
+print(f"El perimetro del círculo es: {circle.calculate_perimeter():.2f}")
+print(f"El área del círculo es: {circle.calculate_area():.2f}")
+print(f"El perimetro del cuadrado es: {square.calculate_perimeter():.2f}")
+print(f"El área del cuadrado es: {square.calculate_area():.2f}")
+print(f"El perímetro del rectángulo es: {rectangle.calculate_perimeter():.2f}")
+print(f"El área del rectángulo es: {rectangle.calculate_area():.2f}")
 
 #EJERCICIO 3
-print("\nUtilidad de la Herencia Múltiple en Clases.")
+#print("\nUtilidad de la Herencia Múltiple en Clases.")
 answer = 'Según lo visto en las clases podemos decir que la herencia multiple se utiliza para heredar de mas de una clase padre y asi podemos utilizar métodos de varias clases en una clase hija.\nSirve para:\n\t1. Utilizar metodos en diferentes clases.\n\t2. Tener ceodigo reutilizable.\n\n'
-print(answer)
+#print(answer)
 #EJEMPLO
 class Plant:
     def __init__(self, name):
@@ -134,6 +134,6 @@ class RoseAppleTree(Plant, FloweringPlant, FruitingPlant):
 
 tree = RoseAppleTree("Árbol de Manzana Rosa")
 
-print(tree.photosynthesis())
-print(tree.bloom())
-print(tree.produce_fruit())
+# print(tree.photosynthesis())
+# print(tree.bloom())
+# print(tree.produce_fruit())
