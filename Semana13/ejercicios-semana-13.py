@@ -48,7 +48,7 @@ class User:
     @property
     def age(self):
         today = date.today()
-        return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day))
+        return today.year - self.birth_date.year - ((today.month, today.day) < (self.birth_date.month, self.birth_date.day)) #Funcionalidad que compara no solo años, sino tambien meses y dia para saber si ya ha cumplido en el año actual
 
 def is_adult(func):
     def wrapper(user, *args, **kwargs):
@@ -62,9 +62,8 @@ def president_election(user):
     return "Accediendo a al sistema de votación."
 
 # Creando usuarios
-user1 = User(date(2005, 6, 15))  # 18 años (depende del año actual)
-user2 = User(date(2010, 7, 20))  # 13 años
-
+user1 = User(date(2005, 6, 15))
+user2 = User(date(2010, 7, 20))
 #PRUEBAS
-print(president_election(user1))  # Permitido
-print(president_election(user2))  # Esto arrojará un error
+print(president_election(user1))  # Puede votar
+print(president_election(user2))  # Error: No puede votar
