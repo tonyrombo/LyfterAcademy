@@ -20,11 +20,11 @@ suma_y_altura(3, 5, nombre="Carlos", altura=170)
 #2. Cree un decorador que se encargue de revisar si todos los parámetros de la función que decore son números, y arroje una excepción de no ser así.
 
 def validar_numeros(func):
-    def wrapper(*args):
+    def wrapper(*args, **kwargs):
         for arg in args:
             if not isinstance(arg, (int, float)):#funcionalidad para revisar si es integer o float
                 raise ValueError(f"Error, se deben ingresar números y se ha ingresado: {arg}")
-        return func(*args)
+        return func(*args, **kwargs)
     return wrapper
 
 @validar_numeros
