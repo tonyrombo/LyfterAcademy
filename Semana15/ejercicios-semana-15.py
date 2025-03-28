@@ -1,28 +1,36 @@
 #1. Crea un bubble_sort por tu cuenta sin revisar el código de la lección.
 
-def bubble_sort(list):
-    for first_index in range(len(list)):
-        for second_index in range(len(list) - 1 - first_index):
-            if list[second_index] > list[second_index + 1]:
-                list[second_index], list[second_index + 1] = list[second_index + 1], list[second_index] #Con este codigo se intercambian valores de manera sencilla y se evita el uso de una variable temporal
-    return list
+def bubble_sort(numbers):
+    for first_index in range(len(numbers)):
+        is_swapped = False
+        for second_index in range(len(numbers) - 1 - first_index):
+            if numbers[second_index] > numbers[second_index + 1]:
+                numbers[second_index], numbers[second_index + 1] = numbers[second_index + 1], numbers[second_index] #Con este codigo se intercambian valores de manera sencilla y se evita el uso de una variable temporal
+                is_swapped = True
+        if not is_swapped:
+            break
+    return numbers
 
 # Ejemplo
-my_list = [5, 2, 9, 1, 5, 6, -2]
-print(bubble_sort(my_list))  # [1, 2, 5, 5, 6, 9]
+#my_list = [5, 2, 9, 1, 5, 6, -2]
+#print(bubble_sort(my_list))  # [1, 2, 5, 5, 6, 9]
 
 #2. Modifica el bubble_sort para que funcione de derecha a izquierda, ordenando los números menores primero (como en la imagen de abajo).
 
-def reversed_bubble_sort(list):
-    for first_index in range(len(list)):
-        for second_index in range(len(list) - 1, first_index, -1):  # Se invierte el recorrido del for
-            if list[second_index] < list[second_index - 1]:  # Se intercambian si el anterior es menor
-                list[second_index], list[second_index - 1] = list[second_index - 1], list[second_index]
-    return list
+def reversed_bubble_sort(numbers):
+    is_swapped = False
+    for first_index in range(len(numbers)):
+        for second_index in range(len(numbers) - 1, first_index, -1):  # Se invierte el recorrido del for
+            if numbers[second_index] < numbers[second_index - 1]:  # Se intercambian si el anterior es menor
+                numbers[second_index], numbers[second_index - 1] = numbers[second_index - 1], numbers[second_index]
+                is_swapped = True
+        if not is_swapped:
+            break
+    return numbers
 
 # Ejemplo:
-my_list = [5, 2, 9, 1, 5, 6]
-print(reversed_bubble_sort(my_list))  # [9, 6, 5, 5, 2, 1]
+#my_list = [5, 2, 9, 1, 5, 6]
+#print(reversed_bubble_sort(my_list))  # [9, 6, 5, 5, 2, 1]
 
 
 #3 Implemente un bubble_sort que funcione para Linked Lists
@@ -32,62 +40,73 @@ class Node:
         self.data = data
         self.next = None
 
-class Stack:
+class LinkedList:
     def __init__(self):
         self.top = None
 
-    def push(self, data):
+    def append(self, data):
         new_node = Node(data)
-        new_node.next = self.top
-        self.top = new_node
-
-    def pop(self):
-        if self.top is None:
-            print("No hay nodos para eliminar")
-            return None
-
-        removed_data = self.top.data
-        self.top = self.top.next
-        return removed_data
-
-    def print_stack(self):
-        current = self.top
-        if not current:
-            print("No hay nodos para mostrar.")
+        if not self.top:
+            self.top = new_node
             return
-
-        print("Mostrando stack de arriba hacia abajo:")
-        while current:
-            print(f"| {current.data} |")
+        
+        current = self.top
+        while current.next:
             current = current.next
-        print("------")
+        current.next = new_node
 
-    def bubble_sort(self):
+    def print_linked_list(self):
+        current = self.top
+        while current:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("None")
+
+    def swap_nodes(self, prev, node1, node2):#Funcion para intercambiar nodos de posicion y se retornan en orden inverso
+        if prev:
+            prev.next = node2
+        else:
+            self.top = node2
+
+        node1.next = node2.next
+        node2.next = node1
+
+    def bubble_sort(self, ascending=True):
         if not self.top or not self.top.next:
-            return  # Si solo hay un nodo o está vacío, se salta el sort
+            return  # Se comprueba que hayan nodos que ordenar
 
-        swapped = True
+        swapped = True  # Uso recomendado de una bandera para comprobar que hay cambios
         while swapped:
             swapped = False
+            prev = None
             current = self.top
-            while current.next: #se compara que el current.next no es None
-                if current.data > current.next.data:
-                    current.data, current.next.data = current.next.data, current.data #Se hace el swap si cumplen con la comparacion de valores
+
+            while current and current.next:
+                next_node = current.next
+                if (ascending and current.data > current.next.data) or (not ascending and current.data < current.next.data): #Con este metodo se comprueba si los nodos deben ser intercambiados
+                    self.swap_nodes(prev, current, current.next)
                     swapped = True
-                current = current.next #Se actualiza con el nodo siguiente
+                    prev = next_node
+                else:
+                    prev = current
+                    current = current.next #Se actualizan valores de Current y Prev
 
 # Ejemplo:
-#Se agregan nodos al Stack
-stack = Stack()
-stack.push(5)
-stack.push(1)
-stack.push(4)
-stack.push(2)
-stack.push(3)
+#Primero se agregan nodos a la lista
+my_linked_list = LinkedList()
+my_linked_list.append(5)
+my_linked_list.append(2)
+my_linked_list.append(9)
+my_linked_list.append(1)
+my_linked_list.append(8)
 
-print("Antes de Bubble Sort:")
-stack.print_stack()
+print("Esta es la lista sin cambios:")
+my_linked_list.print_linked_list()
 
-print("Después de Bubble Sort:")
-stack.bubble_sort()
-stack.print_stack()
+my_linked_list.bubble_sort(ascending=True)  # Orden ascendente
+print("\nLista despues de ser ordenada de manera ascendente: ")
+my_linked_list.print_linked_list()
+
+my_linked_list.bubble_sort(ascending=False)  # Orden descendente
+print("\nLista despues de ser ordenada de manera descendente:")
+my_linked_list.print_linked_list()
