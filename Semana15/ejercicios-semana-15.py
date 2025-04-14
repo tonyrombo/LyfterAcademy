@@ -1,10 +1,10 @@
 #1. Crea un bubble_sort por tu cuenta sin revisar el código de la lección.
 
-def bubble_sort(numbers):
-    for first_index in range(len(numbers)):
-        is_swapped = False
-        for second_index in range(len(numbers) - 1 - first_index):
-            if numbers[second_index] > numbers[second_index + 1]:
+def bubble_sort(numbers): #o(n)
+    for first_index in range(len(numbers)):#o(n)
+        is_swapped = False#o(n)
+        for second_index in range(len(numbers) - 1 - first_index):#o(n2)
+            if numbers[second_index] > numbers[second_index + 1]: #o(n)
                 numbers[second_index], numbers[second_index + 1] = numbers[second_index + 1], numbers[second_index] #Code to swap values in a simple way and avoid the use of a temporary variable
                 is_swapped = True
         if not is_swapped:
