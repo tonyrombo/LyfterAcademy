@@ -1,6 +1,10 @@
 #1. Crea un bubble_sort por tu cuenta sin revisar el código de la lección.
 
 def bubble_sort(numbers): #o(n)
+    if not isinstance(numbers, list):
+        raise TypeError("Input must be a list.")
+    if not all(isinstance(n, (int, float)) for n in numbers):
+        raise TypeError("All elements must be numbers.")
     for first_index in range(len(numbers)):#o(n)
         is_swapped = False#o(n)
         for second_index in range(len(numbers) - 1 - first_index):#o(n2)
