@@ -1,0 +1,23 @@
+{
+    "categories": [
+        "Casa",
+        "Oficina",
+        "Moto",
+        "Carro",
+        "Salario"
+    ],
+    "transactions": [
+        {
+            "title": "Manivela",
+            "amount": 35000.0,
+            "category": "Moto",
+            "type": "Expense"
+        },
+        {
+            "title": "Pago de mayo",
+            "amount": 1500000.0,
+            "category": "Salario",
+            "type": "Income"
+        }
+    ]
+}

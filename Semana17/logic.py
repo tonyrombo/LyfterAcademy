@@ -3,51 +3,58 @@ import FreeSimpleGUI as sg
 import json
 import os
 
-DATA_FILE = "finanzas_data.json"
+DATA_FILE = "finance_data.json"
+class LogicManager:
+    def __init__(self, filepath=DATA_FILE):
+        self.filepath = filepath
+        self.data = self.load_data()
 
-# Se cargan los datos si hay un archivo qu ya existe
-def load_data():
-    if not os.path.exists(DATA_FILE):
-        return {"categories": [], "transactions": []}
-    with open(DATA_FILE, "r") as file:
-        return json.load(file)
+    # Loading data if there is an existing file
+    def load_data(self):
+        if not os.path.exists(DATA_FILE):
+            return {"categories": [], "transactions": []}
+        with open(self.filepath, "r") as file:
+            return json.load(file)
 
-# Guardar los datos en el archivo
-def save_data(data):
-    with open(DATA_FILE, "w") as file:
-        json.dump(data, file, indent=4)
+    # Saving data into the file
+    def save_data(self):
+        with open(DATA_FILE, "w") as file:
+            json.dump(self.data, file, indent=4)
 
-# Agregar una categoría si no existe ya
-def add_category(data, category):
-    if category not in data["categories"]:
-        data["categories"].append(category)
-        save_data(data)
+    # Add a category if it does not exist
+    def add_category(self, category):
+        if category not in self.data["categories"]:
+            self.data["categories"].append(category)
+            self.save_data()
 
-# Agregar un gasto o ingreso
-def add_transaction(data, transaction):
-    data["transactions"].append(transaction)
-    save_data(data)
+    # Add an expense or income
+    def add_transaction(self, transaction):
+        self.data["transactions"].append(transaction)
+        self.save_data()
 
-#Validar categoria y valores en la transaccion antes de agregarlas
-def validate_category(category_name):
-    return not category_name.strip()
+    #Validate category and values before adding
+    @staticmethod
+    def validate_category(category_name):
+        return not category_name.strip()
 
+    @staticmethod 
+    def validate_transaction(transaction_values):
+        errors = {
+            "transaction-title-error": not transaction_values["transaction-title"].strip(), #If the string method is not possible, returns error
+            "amount-error": False,
+            "category-error": not transaction_values["category"] #If category exists
+        }
 
-def validate_transaction(transaction_values):
-    errors = {
-        "transaction-title-error": not transaction_values["transaction-title"].strip(), #Si no se le puede aplicar un metodo para string, hay error
-        "amount-error": False,
-        "category-error": not transaction_values["category"] #Si la categoria no existe, hay error
-    }
+        try:
+            amount = float(transaction_values["amount"]) #If amount is not a number
+            if amount <= 0: #If amount is negative, returns error
+                errors["amount-error"] = True  # monto debe ser mayor a cero
+        except:
+            errors["amount-error"] = True
 
-    try:
-        float(transaction_values["amount"]) #Si el monto no es un numero se devuelve error
-    except:
-        errors["amount-error"] = True
+        return errors
 
-    return errors
-
-#Mostrar errores
-def show_errors(window, errors): #Se recorre el diccionario de errores por su key, value y se actualizan los valores segun lo retornado en las validaciones
-    for item, show in errors.items():
-        window[f"{item}-text"].update(visible=show) 
+    #Show errors
+    def show_errors(self, window, errors): #Loops dictionary by key, value and updates values depending onvalidations
+        for item, show in errors.items():
+            window[f"{item}-text"].update(visible=show) 

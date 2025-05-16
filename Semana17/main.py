@@ -1,45 +1,47 @@
 # main.py
 import FreeSimpleGUI as sg
-from logic import load_data, add_category, add_transaction
-from gui import show_add_category_window, show_add_transaction_window
+from logic import LogicManager
+from gui import AppGui
 
 def main():
-    data = load_data() #Se cargan los datos del archivo json para tenerlos disponibles en memoria
+    manager = LogicManager()
+    gui = AppGui()
+    
+    data = manager.data#Data is loaded from json file to have it available on memory
 
     layout = [
         [sg.Table(
             values=[[data_value["title"], data_value["amount"], data_value["category"], data_value["type"]] for data_value in data["transactions"]],
-            headings=["Título", "Monto", "Categoría", "Tipo"],
+            headings=["Title", "Amount", "Category", "Type"],
             key="TABLE",
             auto_size_columns=False,
             justification="left",
             expand_x=True,
             expand_y=True
         )],
-        [sg.Button("Agregar Categoría"), sg.Button("Agregar Gasto"), sg.Button("Agregar Ingreso"), sg.Button("Salir")]
+        [sg.Button("Add Category"), sg.Button("Add Expense"), sg.Button("Add Income"), sg.Button("Exit")]
     ]
 
-    window = sg.Window("Gestor de Finanzas Personales", layout, size=(600, 400), resizable=True)
+    window = sg.Window("Personal Finance Manager", layout, size=(600, 400), resizable=True)
 
     while True:
-        event, _ = window.read() #Se usa el guión bajo como manera de prescindir de la variable values ya que en esta parte no se le dio uso#
-
-        if event == sg.WINDOW_CLOSED or event == "Salir":
+        event, _ = window.read() #Underscore is used to dispense with Values variable as it is not being used here
+        if event == sg.WINDOW_CLOSED or event == "Exit":
             break
 
-        elif event == "Agregar Categoría":
-            nueva_categoria = show_add_category_window() #Se llama a la función con la ventana para agregar categoria y el dato devuelto se guarda en variable
-            if nueva_categoria: #Si el proceso fue exitoso y hay una categoria nueva, se agrega a la lista que se usa para el dropdown
-                add_category(data, nueva_categoria)
+        elif event == "Add Category":
+            new_category = gui.show_add_category_window() #Calling Add Category window and saving returned data in a variable
+            if new_category: #If the process is successful it saves the new category in the list for the dropdown
+                manager.add_category(new_category)
 
-        elif event in ("Agregar Gasto", "Agregar Ingreso"): #Click a Agregar Gasto o Ingreso
+        elif event in ("Add Expense", "Add Income"): #Click to Add Expense or Income
 
-            tipo = "Gasto" if event == "Agregar Gasto" else "Ingreso" #Se actualiza el tipo dependiendo del tipo de transaccion a ejecutar
-            nueva_transaccion = show_add_transaction_window(data["categories"], tipo) #Se abre la ventana de agregar transaccion y lo devuelto se guarda en variable
-            if nueva_transaccion: # Si el proceso fue exitoso, se agrega al json de datos
-                add_transaction(data, nueva_transaccion)
+            transaction_type = "Expense" if event == "Add Expense" else "Income" #The Type is updated depending on the event received
+            new_transaction = gui.show_add_transaction_window(data["categories"], transaction_type) #Open Add Transaction window and saves the data in a variable
+            if new_transaction: # If the process is sucessful it saves it to the data jason 
+                manager.add_transaction(new_transaction)
 
-        # Actualizar tabla con los nuevos datos
+        # Update table with new data
         window["TABLE"].update(values=[[data_value["title"], data_value["amount"], data_value["category"], data_value["type"]] for data_value in data["transactions"]])
 
     window.close()

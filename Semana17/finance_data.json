@@ -1,0 +1,13 @@
+{
+    "categories": [
+        "Motorcycle"
+    ],
+    "transactions": [
+        {
+            "title": "Wheels",
+            "amount": 135000.0,
+            "category": "Motorcycle",
+            "type": "Expense"
+        }
+    ]
+}
