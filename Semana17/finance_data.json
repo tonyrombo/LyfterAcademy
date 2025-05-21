@@ -1,12 +1,21 @@
 {
     "categories": [
-        "Motorcycle"
+        "Motorcycle",
+        "Home",
+        "Office",
+        "Salary"
     ],
     "transactions": [
         {
             "title": "Wheels",
             "amount": 135000.0,
             "category": "Motorcycle",
+            "type": "Expense"
+        },
+        {
+            "title": "May Payment",
+            "amount": 1500000.0,
+            "category": "Salary",
             "type": "Expense"
         }
     ]

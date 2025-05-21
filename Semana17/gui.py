@@ -1,9 +1,10 @@
 import FreeSimpleGUI as sg
-from logic import LogicManager
+from logic import LogicManager, Category, Transaction
 
 class AppGui:
     def __init__(self):
         self.manager = LogicManager()
+
     # Window to add a new category
     def show_add_category_window(self):
         layout = [
@@ -17,13 +18,16 @@ class AppGui:
             event, values = window.read()
             if event in (sg.WINDOW_CLOSED, "Cancel"): #If Cancel button or X is clicked
                 break
+
             if event == "ADD_CAT_BTN":
-                error = self.manager.validate_category(values["category"])
+                category_obj = Category(values["category"])
+                error = not category_obj.is_valid()
+
                 window["category-name-error-text"].update(visible=error)
 
                 if not error: #If there is not error before, it closes the window and return the category value
                     window.close()
-                    return values["category"]
+                    return category_obj
                 
         window.close()
         return None
@@ -37,8 +41,8 @@ class AppGui:
             [sg.Text("Amount:"), sg.Input(key="amount")],
             [sg.Text('You need to add a valid amount', key='amount-error-text', visible=False, text_color="red")],
 
-            [sg.Text("Category:"), sg.Combo(categories, key="category", readonly=True)], #Combo is used to generate dropdowns, receives a list as input value
-            [sg.Text('Debes seleccionar una categoría', key='category-error-text', visible=False, text_color="red")],
+            [sg.Text("Category:"), sg.Combo(categories, key="category", readonly=True)],
+            [sg.Text('You need to select a category', key='category-error-text', visible=False, text_color="red")],
 
             [sg.Button("Add", key="ADD_TRANS_BTN"), sg.Button("Cancel")]
         ]
@@ -52,18 +56,18 @@ class AppGui:
                 break
 
             if event == "ADD_TRANS_BTN":
-                errors = self.manager.validate_transaction(values) #Inputs validation
+                errors = Transaction.validate_transaction(values) #Inputs validation
                 self.manager.show_errors(window, errors) #Show errors if existing
-                
+
                 if not any(errors.values()): #If there is not errors, it closes the window and return the new data for the transaction
+                    transaction_obj = Transaction(
+                        title=values["transaction-title"],
+                        amount=values["amount"],
+                        category=values["category"],
+                        type=transaction_type
+                    )
                     window.close()
-                    return {
-                        "title": values["transaction-title"].strip(),
-                        "amount": float(values["amount"]),
-                        "category": values["category"],
-                        "type": transaction_type
-                    }
+                    return transaction_obj
 
         window.close()
         return None
-

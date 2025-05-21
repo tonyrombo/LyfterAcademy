@@ -1,17 +1,16 @@
-# main.py
 import FreeSimpleGUI as sg
-from logic import LogicManager
+from logic import LogicManager, Category, Transaction
 from gui import AppGui
 
 def main():
     manager = LogicManager()
     gui = AppGui()
-    
-    data = manager.data#Data is loaded from json file to have it available on memory
+
+    data = manager.data #Data is loaded from json file to have it available on memory
 
     layout = [
         [sg.Table(
-            values=[[data_value["title"], data_value["amount"], data_value["category"], data_value["type"]] for data_value in data["transactions"]],
+            values=[[t["title"], t["amount"], t["category"], t["type"]] for t in data["transactions"]],
             headings=["Title", "Amount", "Category", "Type"],
             key="TABLE",
             auto_size_columns=False,
@@ -26,7 +25,7 @@ def main():
 
     while True:
         event, _ = window.read() #Underscore is used to dispense with Values variable as it is not being used here
-        if event == sg.WINDOW_CLOSED or event == "Exit":
+        if event in (sg.WINDOW_CLOSED, "Exit"):
             break
 
         elif event == "Add Category":
@@ -35,14 +34,15 @@ def main():
                 manager.add_category(new_category)
 
         elif event in ("Add Expense", "Add Income"): #Click to Add Expense or Income
-
             transaction_type = "Expense" if event == "Add Expense" else "Income" #The Type is updated depending on the event received
             new_transaction = gui.show_add_transaction_window(data["categories"], transaction_type) #Open Add Transaction window and saves the data in a variable
-            if new_transaction: # If the process is sucessful it saves it to the data jason 
+            if new_transaction: # If the process is sucessful it saves it to the data jason
                 manager.add_transaction(new_transaction)
 
-        # Update table with new data
-        window["TABLE"].update(values=[[data_value["title"], data_value["amount"], data_value["category"], data_value["type"]] for data_value in data["transactions"]])
+        # Update table with latest data
+        window["TABLE"].update(
+            values=[[t["title"], t["amount"], t["category"], t["type"]] for t in data["transactions"]]
+        )
 
     window.close()
 
