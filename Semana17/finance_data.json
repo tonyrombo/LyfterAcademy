@@ -17,6 +17,12 @@
             "amount": 1500000.0,
             "category": "Salary",
             "type": "Expense"
+        },
+        {
+            "title": "PS5 selling",
+            "amount": 150000.0,
+            "category": "Salary",
+            "type": "Income"
         }
     ]
 }

@@ -4,7 +4,8 @@
         "Oficina",
         "Moto",
         "Carro",
-        "Salario"
+        "Salario",
+        "Ventas"
     ],
     "transactions": [
         {
@@ -17,6 +18,12 @@
             "title": "Pago de mayo",
             "amount": 1500000.0,
             "category": "Salario",
+            "type": "Income"
+        },
+        {
+            "title": "Venta de aros",
+            "amount": 65000.0,
+            "category": "Ventas",
             "type": "Income"
         }
     ]
