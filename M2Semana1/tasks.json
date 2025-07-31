@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "titulo": "Leer un libro",
+        "descripcion": "Leer 30 p\u00e1ginas de un libro de desarrollo personal",
+        "status": "Completed"
+    },
+    {
+        "id": 2,
+        "title": "Hacer ejercicio",
+        "description": "Dedicar 1 hora diaria a movilidad corporal o gimnasio",
+        "status": "Pending"
+    },
+    {
+        "id": 6,
+        "title": "Revision periodica a la motocicleta",
+        "description": "Llevar la moto a la agencia en el rango de 3800-4200km para su revision periodica",
+        "status": "Pending"
+    }
+]
