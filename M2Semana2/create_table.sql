@@ -69,13 +69,13 @@ CREATE TABLE IF NOT EXISTS invoice_payment_method (
 
 CREATE TABLE IF NOT EXISTS reviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    product_code INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
     comment VARCHAR(250) NOT NULL,
     rating INTEGER NOT NULL,
     date DATETIME NOT NULL,
     user_id INTEGER NOT NULL,
     product_invoice_id INTEGER NOT NULL,
-    FOREIGN KEY (product_code) REFERENCES products(id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (product_invoice_id) REFERENCES product_invoice(id),
     UNIQUE (user_id, product_invoice_id)

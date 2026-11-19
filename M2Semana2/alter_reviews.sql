@@ -1,0 +1,1 @@
+ALTER TABLE reviews RENAME COLUMN product_code TO product_id;
