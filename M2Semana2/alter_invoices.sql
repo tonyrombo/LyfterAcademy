@@ -1,0 +1,2 @@
+ALTER TABLE invoices ADD COLUMN phone_number VARCHAR(20) NOT NULL;
+ALTER TABLE invoices ADD COLUMN employee_code INTEGER NOT NULL;
